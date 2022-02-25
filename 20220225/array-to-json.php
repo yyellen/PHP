@@ -2,7 +2,7 @@
 $student=[
     "name"=>"John",
     "height"=>173,
-    "weight"=>72
+    "weight"=>72,
 ];
 
 /* JS寫法
@@ -14,6 +14,7 @@ let student={
 */
 // echo json_encode($student);
 ?>
+<h1></h1>
 <script>
     let student=<?=json_encode($student)?>;
     console.log(student);
