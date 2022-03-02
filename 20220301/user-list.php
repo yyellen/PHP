@@ -1,6 +1,6 @@
 <?php
 require_once("db_connect.php");
-$sql="SELECT * FROM users ORDER BY id DESC";
+$sql="SELECT * FROM users WHERE valid=1 ORDER BY id DESC";
 $result = $conn->query($sql);
 ?>
 

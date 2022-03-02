@@ -2,7 +2,7 @@
 require_once("db_connect.php");
 $id=$_GET["id"];
 
-$sql="SELECT * FROM users WHERE id=$id";
+$sql="SELECT * FROM users WHERE id=$id AND valid=1";
 $result = $conn->query($sql);
 $row_count=$result->num_rows;
 $row=$result->fetch_assoc();

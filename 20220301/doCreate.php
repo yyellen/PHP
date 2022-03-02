@@ -40,8 +40,8 @@ $phones_string=implode(', ', $phones); // 會印出0900000000, 0911111111
 $now=date('Y-m-d H:i:s');
 
 
-$sql="INSERT INTO users (account, password, gender, phones, create_time)
-VALUES ('$account', '$password', '$gender', '$phones_string', '$now')";
+$sql="INSERT INTO users (account, password, gender, phones, create_time, valid)
+VALUES ('$account', '$password', '$gender', '$phones_string', '$now', 1)";
 // echo $sql;
 
 if ($conn->query($sql) === TRUE) {

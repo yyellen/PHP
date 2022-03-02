@@ -2,7 +2,7 @@
 require_once("db_connect.php");
 $id=$_GET["id"];
 
-$sql="SELECT * FROM users WHERE id=$id";
+$sql="SELECT * FROM users WHERE id=$id AND valid=1";
 $result = $conn->query($sql);
 $row_count=$result->num_rows;
 $row=$result->fetch_assoc();
@@ -25,6 +25,8 @@ $row=$result->fetch_assoc();
         <div class="py-2">
           <a href="user-list.php" class="btn btn-info">使用者列表</a>
         </div>
+        <form action="doUpdate.php" method="post">
+          <input type="hidden" name="id" value="<?=$row["id"]?>">
         <table class="table table-bordered">
           <tr>
             <td>id</td>
@@ -32,7 +34,7 @@ $row=$result->fetch_assoc();
           </tr>
           <tr>
             <td>account</td>
-            <td><input type="text" class="form-control" value="<?=$row["account"]?>"></td>
+            <td><input type="text" class="form-control" value="<?=$row["account"]?>" name="account"></td>
           </tr>
           <tr>
             <td>gender</td>
@@ -63,7 +65,26 @@ $row=$result->fetch_assoc();
           </tr>
           <tr>
             <td>phones</td>
-            <td><?=$row["phones"]?></td>
+            <?php
+              $phoneArr=explode(", ", $row["phones"]);
+              // var_dump($phoneArr);
+            ?>
+            <td>
+            <div class="row">
+                  <div class="col">
+                    <input type="text" class="form-control" name="phones[]"
+                    value="<?php if(isset($phoneArr[0]))echo $phoneArr[0]; ?>"> 
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" name="phones[]"
+                    value="<?php if(isset($phoneArr[1]))echo $phoneArr[1]; ?>">
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" name="phones[]"
+                    value="<?php if(isset($phoneArr[2]))echo $phoneArr[2]; ?>">
+                  </div>
+                </div>  
+          </td>
           </tr>   
           <tr>
             <td>create time</td>
@@ -71,7 +92,16 @@ $row=$result->fetch_assoc();
           </tr>                              
         </table>
         <div class="py-2">
-          <a href="user.php?id=<?=$row["id"]?>" class="btn btn-info">取消</a>
+          <div class="d-flex justify-content-between">
+            <div>
+              <button class="btn btn-info" type="submit">儲存</button>
+            </div>
+            <div>
+            <a href="doDelete.php?id=<?=$row["id"]?>" class="btn btn-danger">刪除</a>
+            <a href="user.php?id=<?=$row["id"]?>" class="btn btn-info">取消</a>
+            </div>
+          </div>
+          </form>
         </div>
       </div>
     <!-- Bootstrap JavaScript Libraries -->
