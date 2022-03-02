@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(isset($_SESSION["user"])){
+  header("location: dashboard.php");
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,6 +26,9 @@
   <body>
       <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="login-panel card p-3">
+        <?php if(isset($_SESSION["error"]) && $_SESSION["error"]["times"]>=5): ?>
+                您已輸入錯誤超過次數
+            <?php else: ?>
             <form action="doLogin.php" method="post">
             <h2 class="text-center">Login</h2>
             <div class="form-floating mb-3">
@@ -31,11 +40,19 @@
             name="password">
             <label for="floatingPassword">Password</label>
             </div>
+            <?php if(isset($_SESSION["error"])): ?>
+            <div class="mb-2 text-danger">
+            <?php
+                echo $_SESSION["error"]["message"].", 共錯誤".$_SESSION["error"]["times"]."次";
+            ?>
+            </div>
+            <?php endif; ?>
             <div class="d-grid">
                 <button class="btn btn-info" type="submit">Login</button>
             </div>
             </form>
-        </div>
+            <?php endif; ?>
+        </div><!--login-panel-->
       </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
