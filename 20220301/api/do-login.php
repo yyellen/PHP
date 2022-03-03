@@ -4,6 +4,8 @@ require_once("../db_connect.php"); //..到上一層
 $account=$_POST["account"];
 $password=md5($_POST["password"]);
 // $password=$_POST["password"];
+// $account="admin";
+// $password=md5("12345");
 
 $sql="SELECT * FROM users WHERE account = '$account' AND password = '$password'";
 // echo $sql;
@@ -18,6 +20,7 @@ if ($conn->query($sql) == TRUE) {
         $user=$result->fetch_assoc();
 
         $data=[
+            "status"=>1,
             "account"=>$user["account"]
         ];
         $_SESSION["user"]=$data;
@@ -35,8 +38,9 @@ if ($conn->query($sql) == TRUE) {
         $_SESSION["error"]["message"]="帳號或密碼錯誤";
 
         $data=[
+            "status"=>0,
             "error"=>[
-                "messange"=>$_SESSION["error"]["message"],
+                "message"=>$_SESSION["error"]["message"],
                 "times"=>$_SESSION["error"]["times"]
             ]
         ];
